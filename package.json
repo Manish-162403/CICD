@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "echo \"Build script not defined\""
   },
   "repository": {
@@ -16,6 +15,9 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Manish-162403/CICD/issues"
+  },
+  "dependencies": {
+    "express": "^4.17.1" 
   },
   "homepage": "https://github.com/Manish-162403/CICD#readme"
 }
