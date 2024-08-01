@@ -1,4 +1,4 @@
-name: CI
+name: CI/CD Pipeline
 
 on:
   push:
@@ -9,12 +9,11 @@ on:
 jobs:
   build:
 
-    # runs-on: ubuntu-latest
     runs-on: self-hosted
 
     strategy:
       matrix:
-        node-version: [14.x, 16.x,18.x,20.x]
+        node-version: [14.x, 16.x, 18.x, 20.x]
 
     steps:
     - name: Checkout code
@@ -33,3 +32,20 @@ jobs:
 
     - name: Build project
       run: npm run build
+
+  deploy:
+    needs: build
+    runs-on: self-hosted
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Deploy to S3
+      env:
+        AWS_ACCESS_KEY_ID: 'AKIAQFLZDZU5EAQ2JLOB'
+        AWS_SECRET_ACCESS_KEY: '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'
+        AWS_REGION: 'us-east-1'
+        S3_BUCKET: 'manish-awsbucket'
+      run: |
+        aws s3 sync build/ s3://$S3_BUCKET --delete
